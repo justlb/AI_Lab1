@@ -91,8 +91,8 @@ def solve_maze(search_algo):
         # End position is unreachable
         return None
 
-        # Load the maze from the file
-        maze = load_maze()
+    # Load the maze from the file
+    maze = load_maze()
 
         # Find the start and end positions in the maze
         start_pos, end_pos = find_start_end(maze)

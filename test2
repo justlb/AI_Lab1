@@ -1,0 +1,89 @@
+from collections import deque
+
+# Define the BFS function
+def bfs(maze, start_pos, end_pos):
+    queue = deque()
+    queue.append(start_pos)
+    visited = set()
+    parent = {}
+
+    while queue:
+        current_pos = queue.popleft()
+        if current_pos == end_pos:
+            break
+        row, col = current_pos
+        neighbors = [(row-1, col), (row+1, col), (row, col-1), (row, col+1)]
+        for neighbor in neighbors:
+            n_row, n_col = neighbor
+            if n_row < 0 or n_row >= len(maze) or n_col < 0 or n_col >= len(maze[0]):
+                continue
+            if maze[n_row][n_col] == 'X':
+                continue
+            if neighbor not in visited:
+                visited.add(neighbor)
+                parent[neighbor] = current_pos
+                queue.append(neighbor)
+
+    # Reconstruct the path from start to end
+    path = []
+    current_pos = end_pos
+    while current_pos != start_pos:
+        path.append(current_pos)
+        current_pos = parent[current_pos]
+    path.append(start_pos)
+    path.reverse()
+
+    return path
+
+# Define the DFS function
+
+
+def dfs(maze, start_pos, end_pos):
+    stack = [start_pos]
+    visited = set()
+    parent = {}
+
+    while stack:
+        current_pos = stack.pop()
+        if current_pos == end_pos:
+            break
+        row, col = current_pos
+        neighbors = [(row-1, col), (row+1, col), (row, col-1), (row, col+1)]
+        for neighbor in neighbors:
+            n_row, n_col = neighbor
+            if n_row < 0 or n_row >= len(maze) or n_col < 0 or n_col >= len(maze[0]):
+                continue
+            if maze[n_row][n_col] == 'X':
+                continue
+            if neighbor not in visited:
+                visited.add(neighbor)
+                parent[neighbor] = current_pos
+                stack.append(neighbor)
+
+    # Reconstruct the path from start to end
+    path = []
+    current_pos = end_pos
+    while current_pos != start_pos:
+        path.append(current_pos)
+        current_pos = parent[current_pos]
+    path.append(start_pos)
+    path.reverse()
+
+    return path
+
+
+# Read the maze from a file
+with open("maze.txt") as f:
+    maze = [[c for c in line.strip()] for line in f]
+
+# Find the start and end positions
+for row in range(len(maze)):
+    for col in range(len(maze[0])):
+        if maze[row][col] == 'S':
+            start_pos = (row, col)
+        elif maze[row][col] == 'E':
+            end_pos = (row, col)
+
+# Run the BFS and DFS functions and print the results
+print("BFS path:", bfs(maze, start_pos, end_pos))
+print("DFS path:", dfs(maze, start_pos, end_pos))

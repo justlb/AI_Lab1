@@ -1,5 +1,6 @@
 import queue
 import numpy as np
+from collections import deque
 
 
 def solve_maze(search_algo):
@@ -94,24 +95,26 @@ def solve_maze(search_algo):
     # Load the maze from the file
     maze = load_maze()
 
-        # Find the start and end positions in the maze
-        start_pos, end_pos = find_start_end(maze)
+    # Find the start and end positions in the maze
+    start_pos, end_pos = find_start_end(maze)
 
-        # Solve the maze using the specified search algorithm
-        if search_algo == "bfs":
-            path = bfs(maze, start_pos, end_pos)
-        elif search_algo == "dfs":
-            path = dfs(maze, start_pos, end_pos)
-        else:
-            print("Invalid search algorithm specified!")
-            return
+    # Solve the maze using the specified search algorithm
+    if search_algo == "bfs":
+        path = bfs(maze, start_pos, end_pos)
+    elif search_algo == "dfs":
+        path = dfs(maze, start_pos, end_pos)
+    else:
+        print("Invalid search algorithm specified!")
+        return
 
-        # Visualize the maze and the path found by the algorithm
-        visualize(maze, path)
+    # Visualize the maze and the path found by the algorithm
+    visualize(maze, path)
 
-    if __name__ == '__main__':
-        # Prompt the user for the search algorithm to use
-        search_algo = input("Enter 'bfs' to use breadth-first search or 'dfs' to use depth-first search: ")
 
-        # Call the solve_maze function with the specified search algorithm
-        solve_maze(search_algo.lower())
+if __name__ == '__main__':
+    # Prompt the user for the search algorithm to use
+    search_algo = input(
+        "Enter 'bfs' to use breadth-first search or 'dfs' to use depth-first search: ")
+
+    # Call the solve_maze function with the specified search algorithm
+    solve_maze(search_algo.lower())
